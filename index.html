@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Filter</title>
+    <script>
+        function filterData() {
+            const bikeTrail = document.querySelector('input[name="BikeTrail"]:checked').value;
+            const fishing = document.querySelector('input[name="FISHING"]:checked').value;
+            fetch(`/filter?BikeTrail=${bikeTrail}&FISHING=${fishing}`)
+                .then(response => response.json())
+                .then(data => {
+                    const resultDiv = document.getElementById('results');
+                    resultDiv.innerHTML = JSON.stringify(data, null, 2);
+                });
+        }
+    </script>
+</head>
+<body>
+    <h1>Filter Data</h1>
+    <form onsubmit="event.preventDefault(); filterData();">
+        <div>
+            <label>BikeTrail:</label>
+            <input type="radio" name="BikeTrail" value="Yes" required> Yes
+            <input type="radio" name="BikeTrail" value="No" required> No
+        </div>
+        <div>
+            <label>FISHING:</label>
+            <input type="radio" name="FISHING" value="Yes" required> Yes
+            <input type="radio" name="FISHING" value="No" required> No
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+    <h2>Results:</h2>
+    <pre id="results"></pre>
+</body>
+</html>
